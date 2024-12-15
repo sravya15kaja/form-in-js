@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input[type="email"], input[type="password"], input[type="date"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        input[type="email"]:focus, input[type="password"]:focus, input[type="date"]:focus, input[type="number"]:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:active {
+            background-color: #6ef947;
+        }
+
+        #successMessage {
+            color: #28a745;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        #errorMessage {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .message {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <h1>Login Form</h1>
+        <input type="email" placeholder="Email" id="email"><br><br>
+        <input type="password" placeholder="Password" id="password"><br><br>
+        <input type="date" placeholder="Date-Of-Birth" id="dob"><br><br>
+        <input type="number" placeholder="Mobile Number" id="phone"><br><br>
+        <button type="button" id="btn">Submit</button>
+        <div id="successMessage" class="message"></div>
+        <div id="errorMessage" class="message"></div>
+    </form>
+
+    <script>
+        let email = document.getElementById("email");
+        let password = document.getElementById("password");
+        let dob = document.getElementById("dob");
+        let phone = document.getElementById("phone");
+        let btn = document.getElementById("btn");
+        let successMessage = document.getElementById("successMessage");
+        let errorMessage = document.getElementById("errorMessage");
+
+        // Email and Password Patterns
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+        
+        // Date of Birth Pattern (dd/mm/yyyy or other formats)
+        const dobPattern = /^\d{4}-\d{2}-\d{2}$/; // Date in format yyyy-mm-dd (standard format for HTML date inputs)
+        
+        // Phone Number Pattern (for international numbers)
+        const phonePattern = /^[+]?[0-9]{10,15}$/; // Starts with optional '+' and followed by 10-15 digits
+
+        btn.addEventListener("click", () => {
+            errorMessage.innerText = "";
+            successMessage.innerText = "";
+
+            // Validate email
+            let emailValid = emailPattern.test(email.value);
+            
+            // Validate password
+            let passwordValid = passwordPattern.test(password.value);
+            
+            // Validate Date of Birth
+            let dobValid = dobPattern.test(dob.value);
+            
+            // Validate Phone Number
+            let phoneValid = phonePattern.test(phone.value);
+
+            // Error handling
+            if (!emailValid) {
+                errorMessage.innerText = "Invalid email format. Please enter a valid email.";
+            }
+            else if (!passwordValid) {
+                errorMessage.innerText = "Invalid password format. Please include at least 1 capital letter, 1 lowercase letter, 1 special character, and 1 number. Minimum length is 6 characters.";
+            }
+            else if (!dobValid) {
+                errorMessage.innerText = "Invalid Date of Birth format. Please enter a valid date of birth.";
+            }
+            else if (!phoneValid) {
+                errorMessage.innerText = "Invalid phone number format. Please enter a valid phone number, with optional '+' at the start.";
+            }
+            else {
+                successMessage.innerText = "Successfully submitted!";
+            }
+        });
+    </script>
+</body>
+</html>
